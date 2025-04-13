@@ -37,12 +37,17 @@ process run_busco {
 //we generate a report for this workflow
 process generate_report {
   publishDir "${params.outdir}/multiqc", mode: 'copy'
+
+ container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'oras://community.wave.seqera.io/library/multiqc:1.28--d466e41d58d6d704' :
+        'community.wave.seqera.io/library/multiqc:1.28--d466e41d58d6d704' }"
+
   
   input:
   path summaries
 
   output:
-  path("busco_multiqc_report.html")
+  path("busco_multiqc_report*")
 
   script:
   if(params.debug == true){
