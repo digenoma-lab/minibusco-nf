@@ -29,7 +29,7 @@ process run_busco {
  }else{
   """
     minibusco run -a ${genome} -t ${task.cpus} -l ${params.busco_lineage} -o ${name}
-    cp ${name}/summary.txt ${name}/short_summary_${name}.txt
+    sh ${baseDir}/scripts/mini2busco.sh ${name}/summary.txt ${name}/short_summary_${name}.txt
   """
  }
 }
